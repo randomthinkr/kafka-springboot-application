@@ -12,8 +12,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 
-import java.util.UUID;
-
 @Component
 @Slf4j
 public class OrderProducerServiceImpl implements OrderProducerService {
@@ -31,7 +29,7 @@ public class OrderProducerServiceImpl implements OrderProducerService {
 
     @Override
     public String sendOrder(Order order) throws JsonProcessingException {
-        order.setUuid(UUID.randomUUID().toString());
+
         //String key = order.getUuid()
 
         //asynchronous call. Kafka handles retries
@@ -58,5 +56,6 @@ public class OrderProducerServiceImpl implements OrderProducerService {
     }
 
     private void handleFailure(Order order, Throwable throwable) {
+        log.error("Failed to publish event with this error: {}", throwable.getMessage());
     }
 }

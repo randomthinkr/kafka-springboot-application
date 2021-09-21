@@ -1,0 +1,72 @@
+{
+	"info": {
+		"_postman_id": "4ee79008-c4ec-467d-a656-2f609ddf1f84",
+		"name": "Kafka-Brownbag",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "SendOrder",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"uuid\": \"\",\r\n    \"customer\" : {\r\n        \"name\": \"keefe navaja\",\r\n        \"address\": \"brgy barangka, mandaluyong\"\r\n    },\r\n        \"items\": [\r\n            {\r\n                \"itemName\" : \"Nintendo Switch\",\r\n                \"amount\" : 18000\r\n            },\r\n            {\r\n                \"itemName\" : \"Legend of Zelda - Breath of the Wild\",\r\n                \"amount\" : 3000\r\n            }\r\n        ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8088/api/v1/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"api",
+						"v1",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "QueryOrders",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8088/api/v1/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"api",
+						"v1",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

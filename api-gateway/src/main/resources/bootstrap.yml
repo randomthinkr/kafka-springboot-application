@@ -1,0 +1,24 @@
+server:
+  port: 8088
+  servlet:
+    context-path: /api/v1/
+spring:
+  application:
+    name: api-gateway
+  profiles:
+    active: dev
+  cloud:
+    config:
+      ur: ${CONFIG_SERVER_URI}
+    gateway:
+      routes:
+        - id: producer_route
+          uri: http://localhost:8080/api/v1/orders/*
+          predicates:
+            - Method=POST,PUT,DELETE
+        - id: consumer_route
+          uri: http://localhost:8081/api/v1/orders/*
+          predicates:
+            - Method=GET
+  main:
+    web-application-type: reactive

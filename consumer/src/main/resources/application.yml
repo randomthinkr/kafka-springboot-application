@@ -1,0 +1,16 @@
+server:
+  port: 8081
+
+spring:
+  profiles:
+    active: dev
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092, localhost:9093, localhost:9094
+      group-id: order-consumer
+      auto-offset-reset: earliest
+  main:
+    web-application-type: reactive
+kafka:
+  topic: orders
+  auto-offset-reset: earliest

@@ -38,6 +38,7 @@ public class OrderProducerServiceImpl implements OrderProducerService {
         listenableFuture.addCallback(new ListenableFutureCallback<SendResult<String, Order>>() {
             @Override
             public void onFailure(Throwable throwable) {
+                //push to retry topic or store in a DB where a scheduler can update the topic later on.
                 handleFailure(order, throwable);
             }
 
@@ -47,7 +48,7 @@ public class OrderProducerServiceImpl implements OrderProducerService {
             }
         });
 
-        //returned immediately to the client like guaranteeing that the the order will be successfully created
+        //returned immediately to the client like guaranteeing that the  order will be successfully created
         return order.getUuid();
     }
 
@@ -55,7 +56,12 @@ public class OrderProducerServiceImpl implements OrderProducerService {
         log.info("Message for order id - {} was sent to partition - {} for topic - {}", order.getUuid(), sendResult.getRecordMetadata().partition(), sendResult.getRecordMetadata().topic());
     }
 
-    private void handleFailure(Order order, Throwable throwable) {
-        log.error("Failed to publish event with this error: {}", throwable.getMessage());
+    private void handleFailure(Order order, Throwable ex) {
+        log.error("Failed to publish event with this error: {}", ex.getMessage());
+        try{
+            throw ex;
+        } catch (Throwable throwable) {
+            log.error("Error on Failure handler {}", throwable.getMessage());
+        }
     }
 }

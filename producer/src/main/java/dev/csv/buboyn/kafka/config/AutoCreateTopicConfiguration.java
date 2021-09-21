@@ -1,6 +1,7 @@
 package dev.csv.buboyn.kafka.config;
 
 import org.apache.kafka.clients.admin.NewTopic;
+import org.apache.kafka.common.config.TopicConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -20,6 +21,7 @@ public class AutoCreateTopicConfiguration {
         return TopicBuilder.name("orders")
                 .partitions(3)
                 .replicas(3)
+                .config(TopicConfig.MIN_IN_SYNC_REPLICAS_CONFIG, "2") //set to 2 replicas as minimum
                 .build();
     }
 }
